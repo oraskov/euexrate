@@ -82,6 +82,37 @@ def insertion(cur, dat, val):
 
 def main():
     """ The magic starts here. """
+    html_def = [
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-cad.html"
+        ).read().decode('utf-8'),
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-chf.html"
+        ).read().decode('utf-8'),
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-dkk.html"
+        ).read().decode('utf-8'),
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-gbp.html"
+        ).read().decode('utf-8'),
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-nok.html"
+        ).read().decode('utf-8'),
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-sek.html"
+        ).read().decode('utf-8'),
+        urlopen(
+            "https://www.ecb.europa.eu/rss/fxref-usd.html"
+        ).read().decode('utf-8'),
+    ]
+    new_values = extract_data(soup_creator(html_def))
+    new_values.append(
+        ['EURO',
+        str(datetime.date.fromordinal(datetime.date.today().toordinal()-1)),
+        1.0]
+    )
+    for row in new_values:
+        insertion(row[0], row[1], row[2])
 
 
 if __name__ == "__main__":
